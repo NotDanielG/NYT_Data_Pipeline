@@ -1,0 +1,24 @@
+service: nyt-book-pipeline
+frameworkVersion: '3'
+package:
+  exclude:
+    - ./**
+  individually: true
+
+provider:
+  name: aws
+  runtime: python3.8
+  region: us-east-1
+  environment:
+    STAGE: ${opt:stage, 'dev'}
+    NYT_API_KEY: ${file(./env.yml):NYT_API_KEY}
+    GOOGLE_API_KEY: ${file(./env.yml):GOOGLE_API_KEY}
+
+functions:
+  extract-data:
+    handler: functions/extract/extract-data.index
+    package: 
+      include:
+        - functions/extract/*
+
+
