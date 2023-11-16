@@ -19,20 +19,15 @@ def index(event, context):
     nyt_url = extract_config.get_urls()['nyt_list_specific']
     google_books_url = extract_config.get_urls()['google_books']
 
-    config['file_path'] = config['file_path'].format(source='new-york-times', type='list', year=year, week=week)
+    config['nyt_file_path'] = config['file_path'].format(source='new-york-times', type='list', year=year, week=week)
+    config['google_file_path'] = config['google_file_path'].format(source='google-books', type='list', year=year, week=week)
     config['results_key'] = config['results_key_name'].format(key='results')
+    
     extractApi = apiBase(config = config, url=nyt_url, api_key=nyt_api_key, api_params=query_params)
     extractApi.set_google_variables(google_books_url, google_api_key)
 
-
-    body = {
-        "message": "Go Serverless v1.0! Your function executed successfully!",
-        "input": event
-    }
-
     response = {
-        "statusCode": 200,
-        "body": json.dumps(body)
+        "statusCode": extractApi.response_code
     }
 
     return response
