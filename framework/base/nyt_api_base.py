@@ -2,11 +2,11 @@ import requests
 import os
 import boto3
 import json
-import pandas as pd
+from api_base import apiBase
 
-class nytApiBase:
+class nytApiBase(apiBase):
     def __init__(self, config, url, api_key, api_params):
-        super.__init__(config, url, api_key, api_params)
+        super().__init__(config, url, api_key, api_params)
         self.response_code = 0
         self.isbn_list = []
         self.google_result = []

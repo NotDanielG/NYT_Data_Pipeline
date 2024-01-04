@@ -1,9 +1,7 @@
-import datetime 
-
 def get_extract_config():
     return {
         's3_bucket': 'nyt-bestsellers-data',
-        'file_folder:' 'raw/'
+        'file_folder': 'raw/',
         'nyt_file_path': '{source}/{type}/{year}/{week}',
         'file_name': '/data.json',
         'api_key_name': '{key}',

@@ -1,0 +1,35 @@
+--- TODO List ---
+- 
+
+- Fixing how to store additional arguments into apiBase -- DONE
+    - How its stored -- DONE
+- Fix config file !!!
+- Need to account for list URL vs all list URL
+- Dealing with Results from apiBase
+    - Where to store the base URL, do list specific one first (easier to test) -- DONE
+    - What are the event params, how they are going to be placed in apiBase -- DONE
+    - Executing the request with the combined URL (endpoint + args) and using apiBase class -- DONE
+    - Request has finished and returned
+        - Gather all info and store as a CSV
+            - Need to separate info into their respective tables (DO IN REDSHIFT)
+        - How to store in s3 -- DONE
+            - Need to figure out how to send results to s3 -- DONE
+            - Store by list name, then by best-sellers-date -- DONE
+    
+-Transform step
+    - Two methods, can do both for function
+        - Parsing through results
+            - Find useful columns (author, book_image, description, isbn 10/13, title, publisher, list name, listid, display name)
+            - Description needs to be from googleapi (NYT description is shorthand)
+            - Get rating as well from Google
+            - possibly can get like 3 top reviews to display (both neg and pos?)
+    - AWS Glue (Event Drive n once something gets placed into the bucket)
+        - Need to learn how to use crawler + transform into multi files
+- Fix serverless file 
+    - Need step function plugin -- DONE (NOT NEEDED)
+    - Add EventBridge here 
+- Need to figure out Redshift table organization
+    - Best practices in designing tables
+    - Sort out keys + what each table needs
+
+        
