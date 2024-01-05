@@ -1,6 +1,6 @@
 def get_extract_config():
     return {
-        's3_bucket': 'nyt-bestsellers-data',
+        's3_bucket': 'book-bestsellers-data-dev',
         'file_folder': 'raw/',
         'nyt_file_path': '{source}/{type}/{year}/{week}',
         'file_name': '/data.json',

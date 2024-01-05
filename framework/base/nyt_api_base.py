@@ -17,15 +17,22 @@ class nytApiBase(apiBase):
         self.execute()
         self.after_execute()
 
+    def before_execute(self):
+        pass
+    
+    def after_execute(self):
+        pass
+
     def execute(self):
         params = '&'.join('='.join((key, value)) for (key, value) in self.endpoint_args.items()) 
         request_url = self.url + params
+        print("REQUEST URL" + request_url)
         response = requests.get(request_url)
 
         self.response_code = response.status_code
         if self.response_code == 200:
             results = json.loads(response.text)['results']
-            self.save_to_s3(save_content=results, bucket_name=self.config['bucket_name'], save_path=self.get_save_path(self.config['nyt_file_path']))
+            self.save_to_s3(save_content=results, bucket_name=self.config['s3_bucket'], save_path=self.get_save_path(self.config['nyt_file_path']))
             self.execute_google_books(results)
 
     def insert_isbn_list(self, results):
@@ -46,7 +53,7 @@ class nytApiBase(apiBase):
                 if results['totalItems'] > 0:
                     self.google_result.insert(results['items'][0])
         
-        self.save_to_s3(save_content=self.google_result, bucket_name=self.config['bucket_name'], save_path=self.get_save_path(self.config['google_file_path']))
+        self.save_to_s3(save_content=self.google_result, bucket_name=self.config['s3_bucket'], save_path=self.get_save_path(self.config['google_file_path']))
             
     def get_save_path(self, file_path):
         return self.config['file_folder'] + file_path + self.config['file_name']
