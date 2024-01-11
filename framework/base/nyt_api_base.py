@@ -38,20 +38,21 @@ class nytApiBase(apiBase):
     def insert_isbn_list(self, results):
         for book in results:
             if len(book['isbns']) > 0:
-                self.isbn_list.insert(book['isbns'][0])
+                self.isbn_list.append(book['isbns'][0]['isbn13'])
 
     def execute_google_books(self, results):
         self.insert_isbn_list(results)
         for isbn in self.isbn_list:
-            param_string = self.config['google_params'].copy().format(isbn=isbn, api=self.google_key)
+            param_string = self.config['google_params'].format(isbn=isbn, api=self.google_key)
             request_url = self.google_url + param_string
+            print('GOOGLE URL:', request_url)
             response = requests.get(request_url)
 
             self.response_code = response.status_code
             if self.response_code == 200:
                 results = json.loads(response.text)
                 if results['totalItems'] > 0:
-                    self.google_result.insert(results['items'][0])
+                    self.google_result.append(results['items'][0])
         
         self.save_to_s3(save_content=self.google_result, bucket_name=self.config['s3_bucket'], save_path=self.get_save_path(self.config['google_file_path']))
             

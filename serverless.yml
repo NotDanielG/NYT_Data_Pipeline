@@ -16,6 +16,7 @@ provider:
   name: aws
   runtime: python3.9
   region: us-east-1
+  timeout: 30
   environment:
     STAGE: ${opt:stage, 'dev'}
     NYT_API_KEY: ${file(./env.yml):NYT_API_KEY}
