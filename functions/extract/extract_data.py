@@ -10,7 +10,7 @@ def index(event, context):
     query_params = event['nyt_params'] # listname, bestsellers-date, api-key
     
     date = get_datetime_from_weeknum(year=year, week=week)
-    query_params['bestsellers-date'] = date
+    query_params['published-date'] = date
 
     nyt_api_key = os.environ.get('NYT_API_KEY')
     google_api_key = os.environ.get('GOOGLE_API_KEY')
